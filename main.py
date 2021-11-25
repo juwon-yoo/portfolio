@@ -24,29 +24,27 @@ parser.add_argument('id', help='프로젝트ID', type=int, required=True)
 def main():
     return render_template('main.html')
 
-@app.route('/detail/<id>', methods=['GET'])
+@app.route('/detail', methods=['GET'])
 def contact():
     if request.method=='GET':
 
-        sql = 'SELECT * FROM project'
+        args = parser.parse_args()
+        id = args['id']
+
+        sql = 'SELECT * FROM project WHERE id= :id'
         query = {
             'id': id
         }      
-        rows = app.database.execute(text(sql)).fetchall()
-        retVal = []
-        for row in rows:
-            r = {  
-                    'p_name'     : row['p_name'],
-                    'team'   : row['team'],
-                    'stack'     : row['stack'],
-                    'd'     : row['detail'],
-                    'id'   : row['id']                                 
-                }
-            retVal.append(r)
-        return render_template('detail.html', label=retVal)
+        rows = app.database.execute(text(sql), query).fetchall()
+        r={
+            'p_name' : rows[0][0],
+            'team' : rows[0][1],
+            'stack' : rows[0][2],
+            'detail' : rows[0][3]
 
-
-
+        }
+        return render_template('detail.html', p_name=r['p_name'], team=r['team'], stack=r['stack'], detail=r['detail'])
+        
 if __name__ == "__main__":
-    #서버 시작
+    # 서버 시작
     app.run(debug=True, host='0.0.0.0', port=80)

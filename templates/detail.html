@@ -5,13 +5,31 @@
     <title>
         detail
     </title>
+    <style>
+        h2{
+            color:navy;}
+        h1 {
+            color:navy;
+            text-align: center;}
+        .right{
+            background-color:papayawhip;
+            margin: 10px;
+            padding:30px;
+        }
+    </style>
 </head>
 <body>
-    <h3>this is information about project</h3>
-    {% if label %}
-            <span class="result_lable">
-                {{ label }}
-             </span>
-        {% endif %}
+
+    <div class="right">
+        <h1> Project Detail</h1>
+        <hr>
+        <h2>Project Name : {{ p_name }}</h2>
+        <h2>Role : {{ team }} </h2>
+        <h2>Technologies Used : {{ stack }}</h2>
+        <h2>Detail : {{detail}}</h2>
+
+        
+    </div>
+       
 </body>
 </html>
